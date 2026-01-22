@@ -124,17 +124,29 @@ class CheckerboardCalibration:
                 [0, 0, 1]
             ])
         
-        # 透视投影
-        points_2d = []
-        for point in points_3d:
-            if point[2] != 0:  # 避免除以零
-                x_proj = (camera_matrix[0, 0] * point[0] / point[2]) + camera_matrix[0, 2]
-                y_proj = (camera_matrix[1, 1] * point[1] / point[2]) + camera_matrix[1, 2]
-                points_2d.append([x_proj, y_proj])
-            else:
-                points_2d.append([0, 0])
+        # 透视投影 (向量化实现)
+        # 避免除以零
+        z_values = points_3d[:, 2]
+        z_values = np.where(z_values == 0, 1e-6, z_values)
         
-        return np.array(points_2d)
+        # 计算投影
+        x_proj = (camera_matrix[0, 0] * points_3d[:, 0] / z_values) + camera_matrix[0, 2]
+        y_proj = (camera_matrix[1, 1] * points_3d[:, 1] / z_values) + camera_matrix[1, 2]
+        
+        points_2d = np.column_stack([x_proj, y_proj])
+        return points_2d
+    
+    def _convert_to_image_coords(self, point: np.ndarray) -> tuple:
+        """
+        将浮点坐标转换为图像坐标
+        
+        Args:
+            point: 浮点坐标 [x, y]
+            
+        Returns:
+            整数坐标元组 (x, y)
+        """
+        return (int(round(point[0])), int(round(point[1])))
     
     def visualize_checkerboard(self, x: float, y: float, z: float,
                               rx: float, ry: float, rz: float,
@@ -164,12 +176,11 @@ class CheckerboardCalibration:
         
         # 绘制棋盘格角点
         for i, point in enumerate(points_2d):
-            x_coord = int(point[0])
-            y_coord = int(point[1])
-            if 0 <= x_coord < 1280 and 0 <= y_coord < 960:
-                cv2.circle(img, (x_coord, y_coord), 5, (0, 0, 255), -1)
+            coords = self._convert_to_image_coords(point)
+            if 0 <= coords[0] < 1280 and 0 <= coords[1] < 960:
+                cv2.circle(img, coords, 5, (0, 0, 255), -1)
                 # 可选: 添加点序号
-                # cv2.putText(img, str(i), (x_coord+5, y_coord+5), 
+                # cv2.putText(img, str(i), (coords[0]+5, coords[1]+5), 
                 #            cv2.FONT_HERSHEY_SIMPLEX, 0.3, (0, 0, 0), 1)
         
         # 绘制连接线
@@ -177,8 +188,8 @@ class CheckerboardCalibration:
             for col in range(self.pattern_size[0] - 1):
                 idx1 = row * self.pattern_size[0] + col
                 idx2 = row * self.pattern_size[0] + col + 1
-                pt1 = tuple(points_2d[idx1].astype(int))
-                pt2 = tuple(points_2d[idx2].astype(int))
+                pt1 = self._convert_to_image_coords(points_2d[idx1])
+                pt2 = self._convert_to_image_coords(points_2d[idx2])
                 if (0 <= pt1[0] < 1280 and 0 <= pt1[1] < 960 and
                     0 <= pt2[0] < 1280 and 0 <= pt2[1] < 960):
                     cv2.line(img, pt1, pt2, (100, 100, 100), 1)
@@ -187,8 +198,8 @@ class CheckerboardCalibration:
             for row in range(self.pattern_size[1] - 1):
                 idx1 = row * self.pattern_size[0] + col
                 idx2 = (row + 1) * self.pattern_size[0] + col
-                pt1 = tuple(points_2d[idx1].astype(int))
-                pt2 = tuple(points_2d[idx2].astype(int))
+                pt1 = self._convert_to_image_coords(points_2d[idx1])
+                pt2 = self._convert_to_image_coords(points_2d[idx2])
                 if (0 <= pt1[0] < 1280 and 0 <= pt1[1] < 960 and
                     0 <= pt2[0] < 1280 and 0 <= pt2[1] < 960):
                     cv2.line(img, pt1, pt2, (100, 100, 100), 1)
