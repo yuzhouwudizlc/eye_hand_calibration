@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\Administrator\Desktop\毕业论文\机械臂汇总\code\hand_eye_calibrate_vscpp\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Administrator\Desktop\毕业论文\机械臂汇总\code\hand_eye_calibrate_vscpp\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{E1906B53-EAE9-37DF-8F8C-B65AE8ADCF8D}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

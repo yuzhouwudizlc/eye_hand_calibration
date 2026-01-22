@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Administrator\Desktop\毕业论文\机械臂汇总\code\hand_eye_calibrate_vscpp\build\CMakeFiles\c6a50dc8f74c4a08657b7764a55d6758\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{5BF51A12-ACFB-3825-8B12-CBE10E521274}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
