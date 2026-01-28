@@ -3,10 +3,8 @@ project(hand_eye_calibrate_cpp)
 
 # 建议将 OpenCV_DIR 设置为包含 OpenCVConfig.cmake 的目录
 # 通常是 build 文件夹，而不是 lib 文件夹
-set(OpenCV_DIR "D:/Opencv4.5.0/opencv/build")
+set(OpenCV_DIR "D:/opencv/opencv/build")
 
-# 或者更灵活的方式：使用环境变量或让用户自行设置
-# 可以通过命令行参数传递：-DOpenCV_DIR="D:/Opencv4.5.0/opencv/build"
 
 find_package(OpenCV REQUIRED)
 

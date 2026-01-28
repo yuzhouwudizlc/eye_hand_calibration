@@ -17,6 +17,9 @@ cmake --build . --config Release
 ./hand_eye_calibrate robot_poses.txt camera_poses.txt
 ```
 
+
+pose 是 x（m） y（m） z（m）  rx（rad） ry（rad） rz（rad） — 每行 6 个数（以空格或逗号分隔），旋转为欧拉角，单位为弧度
+（注意：此仓库中读取的 `collect_data/poses.txt` 使用此 6 数格式；若使用 4x4 变换矩阵，请相应调整输入格式。）
 输入文件格式示例（每行 16 个数，空格或逗号分隔）：
 
 ```
