@@ -1,2 +1,2 @@
-.\build\Release\hand_eye_calibrate.exe config.txt
+.\build\Release\hand_eye_calibrate.exe
 
